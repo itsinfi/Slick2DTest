@@ -55,6 +55,7 @@ public class Main extends BasicGame {
         //TODO: Gliedern in RenderController & UpdateController????
 
         mapAsset.drawMap(g);
+        //TODO: Bigger Maps!
         //TODO: Hier mehr reinbringen!!!
 
         // Draw player
