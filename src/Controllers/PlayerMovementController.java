@@ -7,18 +7,39 @@ import src.Entities.Player;
 
 public class PlayerMovementController {
 
-    private Player player;
+    
+    //Attribute
 
-    public Player getPlayer() {
-        return player;
-    }
+    private Player player;
+    private int reloadTimer = 0;//TODO: im WeaponController implementieren
+
+
+    //Konstruktoren
 
     public PlayerMovementController(Player player) {
         this.player = player;
     }
 
-    public void updateMovement(Input input, float playerSpeed, int delta, GameContainer container, BulletController bulletController) {
-        // Move player based on keyboard input
+
+    //Getter
+
+    public Player getPlayer() {
+        return player;
+    }
+
+
+    //Methoden
+
+    public void updateMovement(Input input, float playerSpeed, int delta, GameContainer container,
+            BulletController bulletController) {
+        
+        // Timervariablen
+        if (reloadTimer > 0) {
+            reloadTimer--;//TODO: im WeaponController implementieren
+        }
+        
+        
+        // Spielerbewegung
         if (input.isKeyDown(Input.KEY_W) && player.getShape().getY() > 0) {
             player.setY(player.getShape().getY() - playerSpeed * delta);
         }
@@ -32,12 +53,30 @@ public class PlayerMovementController {
                 && player.getShape().getX() < container.getWidth() - player.getShape().getWidth()) {
             player.setX(player.getShape().getX() + playerSpeed * delta);
         }
+
+        // Weapon Slot wechseln
+        if (input.isKeyDown(Input.KEY_1)) {
+            player.setEquipped(true);
+        }
+        if (input.isKeyDown(Input.KEY_2)) {
+            player.setEquipped(false);
+        }
         
 
-        // Shoot bullet on mouse click
+        // Kugeln schießen
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-            bulletController.shoot(input, this.getPlayer());
+            player.getEquipped().attack();
+            if (player.getEquipped().getBullets() > 0) {
+                bulletController.shoot(input, this.getPlayer());
+            }
         }
+
+        // Waffe nachladen
+        if (input.isKeyDown(Input.KEY_R) && reloadTimer == 0) {
+            player.getEquipped().reload(player);
+            reloadTimer = player.getEquipped().getReloadRate();//TODO: im WeaponController implementieren
+        }
+
     }
     
 }

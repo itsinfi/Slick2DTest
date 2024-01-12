@@ -6,6 +6,7 @@ import java.util.Iterator;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import src.Entities.Bullet;
@@ -39,19 +40,27 @@ public class BulletController {
     }
 
     public void drawBullets(Graphics g) {
-        for (Bullet bullet : bullets) {
-            bullet.drawBullet(g);
+        Iterator<Bullet> it = bullets.iterator();
+        while (it.hasNext()) {
+            try {
+                it.next().drawBullet(g);
+            } catch (SlickException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
 
     public void shoot(Input input, LivingEntity livingEntity) {
+        // livingEntity.getEquipped().attack(0, 0, 0);
+        
         float mouseX = input.getMouseX();
         float mouseY = input.getMouseY();
-        float bulletX = livingEntity.getShape().getCenterX();
-            float bulletY = livingEntity.getShape().getCenterY();
-            Vector2f bulletDirection = new Vector2f(mouseX - bulletX, mouseY - bulletY).normalise();
-            Bullet bullet = new Bullet(bulletDirection, bulletX, bulletY, livingEntity);
-            bullets.add(bullet);
+        float bulletX = livingEntity.getShape().getCenterX() + 25;
+        float bulletY = livingEntity.getShape().getCenterY() + 40;
+        Vector2f bulletDirection = new Vector2f(mouseX - bulletX, mouseY - bulletY).normalise();
+        Bullet bullet = new Bullet(bulletDirection, bulletX, bulletY, livingEntity);
+        bullets.add(bullet);
     }
 
 }
