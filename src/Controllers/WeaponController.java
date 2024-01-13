@@ -1,4 +1,4 @@
-package src.Controllers;
+package Controllers;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -9,22 +9,37 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import src.Entities.Bullet;
-import src.Entities.LivingEntity;
+import Entities.Bullet;
+import Entities.LivingEntity;
 
-public class BulletController {
+/**
+ * Diese Klasse verwaltet alle Waffen im Game.
+ * 
+ * @author Sascha Angermann
+ */
+//TODO: ANNOTATIONEN!!!
+public class WeaponController {
     
-    private HashSet<LivingEntity> livingEntities;
-    private HashSet<Bullet> bullets = new HashSet<Bullet>();
 
-    public BulletController(HashSet<LivingEntity> livingEntities) {
+    //Attribute
+
+    private HashSet<LivingEntity> livingEntities;
+    private HashSet<Bullet> bullets = new HashSet<Bullet>();//TODO: Zu Weapon Class ersetzen
+
+
+    //Konstruktoren
+
+    //TODO: Konstruktor updaten + Annotationen hinzufügen
+    public WeaponController(HashSet<LivingEntity> livingEntities) {
         this.livingEntities = livingEntities;
         this.bullets = new HashSet<Bullet>();
     }
 
 
-
-    public void updateBullets(Input input, float bulletSpeed, int delta, GameContainer container, LivingEntity livingEntity) {
+    //Methoden
+    
+    //TODO: Methoden updaten nach UML + Annotationen hinzufügen
+    public void update(Input input, float bulletSpeed, int delta, GameContainer container, LivingEntity livingEntity) {
         // Update bullet position and check for collisions
         Iterator<Bullet> it = bullets.iterator();
         while (it.hasNext()) {
@@ -35,11 +50,9 @@ public class BulletController {
                 it.remove();//ALTER LIVE SAVER SUPER WICHTIG MERKEN YO
             }
         }
-
-        
     }
 
-    public void drawBullets(Graphics g) {
+    public void render(Graphics g) {
         Iterator<Bullet> it = bullets.iterator();
         while (it.hasNext()) {
             try {

@@ -1,4 +1,4 @@
-package src.Entities;
+package Entities;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -6,8 +6,11 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-
-
+//TODO: removen und Logik durch Weapons einbauen
+/**
+ * @author Sascha Angermann
+ */
+@Deprecated
 public class Bullet {
 
     private float xPos;
@@ -17,13 +20,11 @@ public class Bullet {
     private float rotationAngle;
     boolean isShooting = false;
     private Vector2f bulletDirection;
-    private LivingEntity shootingEntity;
 
     public Bullet(Vector2f bulletDirection, float xPos, float yPos, LivingEntity shootingEntity) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.bulletDirection = bulletDirection;
-        this.shootingEntity = shootingEntity;
         isShooting = true;
         this.rotationX = shootingEntity.getShape().getCenterX();
         this.rotationY = shootingEntity.getShape().getCenterY();
